@@ -1,13 +1,6 @@
 #include "FileFunctionality.h"
 
-//#include <iostream>
-//#include <windows.h>
-#include <stdlib.h>
-#include <string>
-
-
-#include <locale>
-#include <codecvt>
+#include <windows.h>
 
 /* Returns true or false in case a file exists in a given path  */
 bool isFileExists(std::filesystem::path path) {
@@ -20,7 +13,7 @@ bool isFileExists(std::filesystem::path path) {
 	//Checks if the file exists in the given path
 	if (std::filesystem::status_known(s) ? std::filesystem::exists(s) : std::filesystem::exists(path))
 	{
-		std::cout << "File exists in location: " << path << std::endl;
+		//std::cout << "File exists in location: " << path << std::endl;
 		return true;
 	}
 	return false;
@@ -37,7 +30,7 @@ bool isFileExists(std::filesystem::path path) {
 }
 
 /*
-	Find the location of exe file, this is where the client's port resides
+	Finds the location of exe file. This is where the client's port resides
 	GetModuleFileNameW() to determine where the .exe is: https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getmodulefilenamew
 	Convert wchar_t object to filesystem type: https://discord.com/channels/331718482485837825/1468520989511122955/1468552048403415172
 */
@@ -52,7 +45,7 @@ std::filesystem::path FindWhereEXEFileIs() {
 	
 	std::filesystem::path path = buffer;
 
-	std::wcout << "Debugging(FileFunctionality): filesystem path is: " << path << std::endl;
+	//std::wcout << "Debugging(FileFunctionality): filesystem path is: " << path << std::endl;
 
 	return path;
 }
@@ -62,7 +55,7 @@ std::filesystem::path RemoveFilenameAndSeparator(std::filesystem::path path,std:
 
 	path.replace_filename(newFileName);
 
-	std::wcout << "Debbuging(FileFunctionality): filesystem path is: " << path << "\n\n";
+	//std::wcout << "Debbuging(FileFunctionality): filesystem path is: " << path << "\n\n";
 
 	return path;
 }

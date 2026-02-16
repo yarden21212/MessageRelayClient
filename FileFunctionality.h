@@ -2,8 +2,10 @@
 #include <fstream>
 #include <filesystem>
 #include <iostream>
-
-#include <windows.h>
+#include <stdlib.h>
+#include <string>
+#include <locale>
+#include <codecvt>
 
 bool isFileExists(std::filesystem::path path);
 std::filesystem::path FindWhereEXEFileIs();

@@ -1,6 +1,9 @@
 #pragma once
 
 #include <iostream>
+#include <string_view>
+#include <string> // For stoi
+#include <charconv> // For std::from_chars
 
 class ClientMenu {
 
@@ -20,7 +23,7 @@ public:
 
 	std::string PickMenuOption(Menu option);
 	void DisplayOptions();
-	ClientMenu::Menu convertToMenuOption(const char* userInput);
-
+	Menu ConvertToMenuOption(std::string_view userInput);
+	std::string OptionSelected(ClientMenu& menu);
 };
 

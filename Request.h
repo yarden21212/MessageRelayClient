@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstdint>
 #include <cstring>
+#include <cmath>
 
 struct RequestHeader {
     uint8_t client_id[16];
@@ -15,3 +16,11 @@ struct RequestHeader {
 };
 
 #pragma pack(pop)
+
+struct ResponseHeader {
+    uint8_t version;
+    uint16_t code;
+    uint32_t payload_size;
+
+    void BuildResponseHeader(uint8_t response[]);
+};

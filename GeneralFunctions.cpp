@@ -56,6 +56,18 @@ namespace general {
         return result;
     }
 
+    // Creates the "little-endian" mechanism in order to support all platforms. Moves the left 2 btyes to the right and the right 2 bytes to the left
+    void ToLittleEndianFromUint16(uint8_t* dest, uint16_t val) {
+        dest[0] = static_cast<uint8_t>(val); // -> Takes the lowest 8 bits and drops the heighest 8 bits (by casting) casting means slicing the 8 heighest bits
+        dest[1] = static_cast<uint8_t>(val >> 8); // -> Moves the 8 heighest bits to the right and then taking the new "lowest 8 bits" (by casting)
+    }
 
+    // Same logic as the above method but with 8 bytes
+    void ToLittleEndianFromUint32(uint8_t* dest, uint32_t val) {
+        dest[0] = static_cast<uint8_t>(val);
+        dest[1] = static_cast<uint8_t>(val >> 8);
+        dest[2] = static_cast<uint8_t>(val >> 16);
+        dest[3] = static_cast<uint8_t>(val >> 24);
+    }
 
 }

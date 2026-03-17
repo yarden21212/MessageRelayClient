@@ -25,4 +25,7 @@ namespace general {
             it = input.insert(it, separator);
         }
     }
+
+    void ToLittleEndianFromUint16(uint8_t* dest, uint16_t val);
+    void ToLittleEndianFromUint32(uint8_t* dest, uint32_t val);
 }

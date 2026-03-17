@@ -41,21 +41,8 @@ int main(int argc, char* argv[]) {
 		catch (const std::exception& e) {
 			std::cout << "[Invalid_argument ERROR]: " << e.what() << std::endl;
 		}
-		//std::cout << "ip: " << ip << std::endl;
-		//std::cout << "port: " << port << std::endl;
 
 		TCPConnector(ip, port);
-
-		//std::cout << "\n\n";
-		//ClientMenu menu;
-		//menu.DisplayOptions();
-
-		////Ask user for input
-		//char input[4];
-		//std::cin >> std::setw(sizeof(input)) >> input; // setw reads maximum 3 digits (the buffer size), no buffer overflow risk
-		//std::cout << "User input: " << input << std::endl;
-		//ClientMenu::Menu menuOption = menu.convertToMenuOption(input);
-		//menu.PickMenuOption(menuOption);
 
 	}
 	//else {

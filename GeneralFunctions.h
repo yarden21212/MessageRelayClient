@@ -11,8 +11,8 @@ namespace general {
         const std::string& fill = " ",
         const std::string& whitespace = " \t");
 
-    template<const unsigned num, const char separator>
 
+    template<const unsigned num, const char separator>
     /* 
         Used mostly in order to display string in hex form.
         https://stackoverflow.com/questions/27952032/how-to-insert-a-character-every-n-characters-in-a-string-in-c
@@ -28,4 +28,10 @@ namespace general {
 
     void ToLittleEndianFromUint16(uint8_t* dest, uint16_t val);
     void ToLittleEndianFromUint32(uint8_t* dest, uint32_t val);
+
+    void CreateUserFile(std::string username, std::string);
+
+    bool ValidateUsername(const std::string& username, const int& maxLength);
+
+    bool ValidatePublicKey(const std::string &publicKey, const int &maxLength);
 }

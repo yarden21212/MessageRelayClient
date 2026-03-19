@@ -13,5 +13,5 @@ private:
 public:
 	ResponseHandler(uint16_t code);
 	void HandleResponse9000(std::vector<uint8_t>& payload);
-	void HandleResponse2100(std::vector<uint8_t>& payload);
+	std::string HandleResponse2100(std::vector<uint8_t>& payload);
 };

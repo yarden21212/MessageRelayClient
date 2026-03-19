@@ -12,6 +12,6 @@ public:
 	static constexpr  uint8_t VERSION = 2;
 public:
 	RequestHandler(uint16_t code);
-	std::vector<uint8_t> HandleRequest700(uint8_t client_id[]);
+	std::vector<uint8_t> HandleRequest700(std::string& userName, uint8_t client_id[]);
 
 };

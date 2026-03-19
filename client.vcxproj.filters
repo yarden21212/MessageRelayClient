@@ -42,6 +42,21 @@
     <ClCompile Include="ResponseHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\cryptopp_wrapper\cryptopp_wrapper\cryptopp_wrapper\AESWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cryptopp_wrapper\cryptopp_wrapper\cryptopp_wrapper\Base64Wrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cryptopp_wrapper\cryptopp_wrapper\cryptopp_wrapper\RSAWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GenerateKeys.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomExceptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileFunctionality.h">
@@ -66,6 +81,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ResponseHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cryptopp_wrapper\cryptopp_wrapper\cryptopp_wrapper\AESWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cryptopp_wrapper\cryptopp_wrapper\cryptopp_wrapper\Base64Wrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cryptopp_wrapper\cryptopp_wrapper\cryptopp_wrapper\RSAWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomExceptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

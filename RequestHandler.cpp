@@ -6,25 +6,34 @@
 #include "RequestHandler.h"
 #include "GeneralFunctions.h"
 
+#include "CustomExceptions.h"
+/* For encryption -> public, private keys */
+#include <rsa.h>
+#include "RSAWrapper.h"
+
 RequestHandler::RequestHandler(uint16_t code) {
     this->code = code;
 }
-std::vector<uint8_t> RequestHandler::HandleRequest700(uint8_t client_id[]) {
-    uint16_t code = 700;
+std::vector<uint8_t> RequestHandler::HandleRequest700(std::string &userTextUsername, uint8_t client_id[]) {
+    RSAPrivateWrapper rsa;
+    auto publicKey = rsa.getPublicKey();
 
-    std::cout << "Type the username " << std::endl;
+    if (!general::ValidatePublicKey(publicKey, 160))
+    {
+        throw IllegalSizeException("[ERROR]: Public key has to be 160 characters. Try again!");   
+    }
+
+    uint16_t code = 700;
 
     std::vector<uint8_t> buffer;
 
-    std::string user_text_username;
-    std::getline(std::cin, user_text_username);
-
-    std::string user_text_username_padding;
-    for (int i = 0; i < 255 - user_text_username.size(); i++) {
-        user_text_username_padding += '\0';
+    std::string userTextUsernamePadding;
+    for (int i = 0; i < 255 - userTextUsername.size(); i++) {
+        userTextUsernamePadding += '\0';
     }
 
-    std::cout << "debug - user_txt is: " << user_text_username << std::endl;
+    std::cout << "\n" << userTextUsername << std::endl;
+    std::cout << "debug - user_txt is: " << userTextUsername << std::endl;
 
     std::string public_key = "FAKE_PUBLIC_KEY";
     std::string public_key_padding;
@@ -32,14 +41,14 @@ std::vector<uint8_t> RequestHandler::HandleRequest700(uint8_t client_id[]) {
         public_key_padding += '\0';
     }
 
-    int payload_size = user_text_username.size() + user_text_username_padding.size()
+    int payload_size = userTextUsername.size() + userTextUsernamePadding.size()
         + public_key.size() + public_key_padding.size();
 
     uint8_t zero_client_id[16] = { 0 };
     RequestHeader header(zero_client_id, RequestHandler::VERSION, this->code, payload_size);
 
-    buffer.resize(sizeof(header) + user_text_username.size()
-        + user_text_username_padding.size()
+    buffer.resize(sizeof(header) + userTextUsername.size()
+        + userTextUsernamePadding.size()
         + public_key.size()
         + public_key_padding.size());
 
@@ -70,11 +79,11 @@ std::vector<uint8_t> RequestHandler::HandleRequest700(uint8_t client_id[]) {
     std::memcpy(buffer.data() + curr_size, payload_size_to_little_endian, sizeof(payload_size_to_little_endian));
     curr_size += sizeof(payload_size_to_little_endian);
 
-    std::memcpy(buffer.data() + curr_size, user_text_username.data(), user_text_username.size());
-    curr_size += user_text_username.size();
+    std::memcpy(buffer.data() + curr_size, userTextUsername.data(), userTextUsername.size());
+    curr_size += userTextUsername.size();
 
-    std::memcpy(buffer.data() + curr_size, user_text_username_padding.data(), user_text_username_padding.size());
-    curr_size += user_text_username_padding.size();
+    std::memcpy(buffer.data() + curr_size, userTextUsernamePadding.data(), userTextUsernamePadding.size());
+    curr_size += userTextUsernamePadding.size();
 
     std::memcpy(buffer.data() + curr_size, public_key.data(), public_key.size());
     curr_size += public_key.size();

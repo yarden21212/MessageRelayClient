@@ -1,4 +1,11 @@
 #include "GeneralFunctions.h"
+#include "FileFunctionality.h"
+
+#include "CustomExceptions.h"
+
+
+#include <filesystem>
+
 
 namespace general {
     /* 
@@ -69,5 +76,21 @@ namespace general {
         dest[2] = static_cast<uint8_t>(val >> 16);
         dest[3] = static_cast<uint8_t>(val >> 24);
     }
+
+    bool ValidateUsername(const std::string &username, const int &maxLength) {
+        const int usernameLength = username.length();
+        if (usernameLength > maxLength || usernameLength < 1)
+            return false;
+
+        return true;
+    }
+
+    bool ValidatePublicKey(const std::string& publicKey, const int& length) {
+        if (publicKey.length() != length)
+            return false;
+
+        return true;
+    }
+
 
 }

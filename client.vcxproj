@@ -103,12 +103,14 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\Public\C++\boost_1_90_0\boost_1_90_0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Public\C++\cryptopp_wrapper\cryptopp_wrapper\cryptopp_wrapper;C:\Users\Public\C++\cryptopp890;C:\Users\Public\C++\boost_1_90_0\boost_1_90_0</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Public\C++\boost_1_90_0\boost_1_90_0</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Public\C++\boost_1_90_0\boost_1_90_0;C:\Users\Public\C++\cryptopp890\x64\Output\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cryptlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -120,19 +122,26 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\Public\C++\boost_1_90_0\boost_1_90_0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Public\C++\cryptopp_wrapper\cryptopp_wrapper\cryptopp_wrapper;C:\Users\Public\C++\cryptopp890;C:\Users\Public\C++\boost_1_90_0\boost_1_90_0</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Public\C++\boost_1_90_0\boost_1_90_0</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Public\C++\boost_1_90_0\boost_1_90_0;C:\Users\Public\C++\cryptopp890\x64\Output\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cryptlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\cryptopp_wrapper\cryptopp_wrapper\cryptopp_wrapper\AESWrapper.cpp" />
+    <ClCompile Include="..\..\..\cryptopp_wrapper\cryptopp_wrapper\cryptopp_wrapper\Base64Wrapper.cpp" />
+    <ClCompile Include="..\..\..\cryptopp_wrapper\cryptopp_wrapper\cryptopp_wrapper\RSAWrapper.cpp" />
     <ClCompile Include="ClientConnection.cpp" />
     <ClCompile Include="ClientMenu.cpp" />
+    <ClCompile Include="CustomExceptions.cpp" />
     <ClCompile Include="FileFunctionality.cpp" />
     <ClCompile Include="GeneralFunctions.cpp" />
+    <ClCompile Include="GenerateKeys.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="NetworkBelonging.cpp" />
     <ClCompile Include="Request.cpp" />
@@ -140,8 +149,12 @@
     <ClCompile Include="ResponseHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\cryptopp_wrapper\cryptopp_wrapper\cryptopp_wrapper\AESWrapper.h" />
+    <ClInclude Include="..\..\..\cryptopp_wrapper\cryptopp_wrapper\cryptopp_wrapper\Base64Wrapper.h" />
+    <ClInclude Include="..\..\..\cryptopp_wrapper\cryptopp_wrapper\cryptopp_wrapper\RSAWrapper.h" />
     <ClInclude Include="ClientConnection.h" />
     <ClInclude Include="ClientMenu.h" />
+    <ClInclude Include="CustomExceptions.h" />
     <ClInclude Include="FileFunctionality.h" />
     <ClInclude Include="GeneralFunctions.h" />
     <ClInclude Include="NetworkBelonging.h" />

@@ -2,6 +2,12 @@
 
 #include <windows.h>
 
+#include <fstream>
+
+/* Delete after done here*/
+//#include <rsa.h>
+//#include "RSAWrapper.h"
+
 /* Returns true or false in case a file exists in a given path  */
 bool isFileExists(std::filesystem::path path) {
 
@@ -59,3 +65,78 @@ std::filesystem::path RemoveFilenameAndSeparator(std::filesystem::path path,std:
 
 	return path;
 }
+
+/* Creates a folder with a given name in the location: of the exe file */
+void OpenFolderInsideExeFile(std::string folderName) {
+	std::filesystem::path exePath = FindWhereEXEFileIs();
+	std::filesystem::path pathWithoutExeSuffix = RemoveFilenameAndSeparator(exePath, "");
+	try {
+		if (std::filesystem::create_directory(pathWithoutExeSuffix / folderName)) {
+			std::cout << "Folder " << folderName << "created" << std::endl;
+		}
+
+		else
+			std::cerr << "Folder already exists!\n";
+	}
+	catch (const std::exception& e) {
+		std::cerr << "[ERROR]: during folder creation: " << e.what() << '\n';
+	}
+}
+
+bool CheckIfFileAlreadyExists(const std::filesystem::path path) {
+	if (std::filesystem::exists(path))
+		return true;
+	else
+		return false;
+}
+bool CreateUserInfoFile(const std::string username, const std::string uniqueIdentifier, const std::string privateKey) {
+
+	std::filesystem::path path = FindWhereEXEFileIs();
+	try {
+		std::string fileName = "Users\\" + username + ".info.txt";
+
+		std::filesystem::path pathWithoutExeSuffix = RemoveFilenameAndSeparator(path, fileName);
+
+		bool fileExists = CheckIfFileAlreadyExists(pathWithoutExeSuffix);
+
+		if (!fileExists) {
+			std::ofstream file(pathWithoutExeSuffix, std::ios::app);
+
+			if (!file.is_open())
+				return false;
+
+
+			// Write into the file
+			std::string output;
+			output += username + '\n';
+			output += uniqueIdentifier + '\n';
+			output += privateKey + '\n';
+			file << output;
+			file.close();
+
+			std::cout << "Succeed to store the user info locally!\n";
+			return true;
+		}
+		else {
+			std::cout << "User already exists!\n";
+			return false;
+		}
+	}
+	catch (const std::exception& e) {
+		std::cout << "Failed to access the folder!\n " <<  e.what();
+		return false;
+	}
+	
+}
+
+//int main() {
+//	RSAPrivateWrapper rsa;
+//	std::string privateKey = rsa.getPrivateKey();
+//
+//	OpenFolderInsideExeFile("Users");
+//	CreateUserInfoFile("Yarden", "55HJPP234!@#$%!@ASASVASV", privateKey);
+//
+//	std::system("pause");
+//	return 0;
+//}
+

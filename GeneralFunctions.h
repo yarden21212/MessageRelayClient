@@ -2,6 +2,13 @@
 #include <iostream>
 #include <algorithm> // For std::all_of() function
 #include <string>
+#include <vector>
+//#include "ResponseHandler.h"
+#include "FileFunctionality.h"
+#include "CustomExceptions.h"
+
+
+class ResponseHandler;
 
 namespace general {
     bool isNumber(const std::string_view value);
@@ -28,10 +35,13 @@ namespace general {
 
     void ToLittleEndianFromUint16(uint8_t* dest, uint16_t val);
     void ToLittleEndianFromUint32(uint8_t* dest, uint32_t val);
-
-    void CreateUserFile(std::string username, std::string);
-
+    std::string ConvertBytesToHex(const std::vector<uint8_t>& payload);
+    std::vector<uint8_t> ConvertHexToBytes(const std::string& hex);
+    //void CreateUserFile(std::string username, std::string);
     bool ValidateUsername(const std::string& username, const int& maxLength);
-
     bool ValidatePublicKey(const std::string &publicKey, const int &maxLength);
+    std::string getUserId(std::string& username);
+
+    std::vector<uint8_t> TargetNameExists(ResponseHandler& serverResponse);
+
 }

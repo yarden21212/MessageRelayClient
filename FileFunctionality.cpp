@@ -2,12 +2,6 @@
 
 #include <windows.h>
 
-#include <fstream>
-
-/* Delete after done here*/
-//#include <rsa.h>
-//#include "RSAWrapper.h"
-
 /* Returns true or false in case a file exists in a given path  */
 bool isFileExists(std::filesystem::path path) {
 
@@ -23,16 +17,6 @@ bool isFileExists(std::filesystem::path path) {
 		return true;
 	}
 	return false;
-
-
-	/* ----------------------- Second implementation -----------------------------*/
-	/*std::ifstream file(path);
-
-	if (file) {
-		std::cout << " Contact already exists " << std::endl;
-		return true;
-	}
-	return false;*/
 }
 
 /*
@@ -72,11 +56,11 @@ void OpenFolderInsideExeFile(std::string folderName) {
 	std::filesystem::path pathWithoutExeSuffix = RemoveFilenameAndSeparator(exePath, "");
 	try {
 		if (std::filesystem::create_directory(pathWithoutExeSuffix / folderName)) {
-			std::cout << "Folder " << folderName << "created" << std::endl;
+			/*std::cout << "Folder " << folderName << "created" << std::endl;*/
 		}
 
-		else
-			std::cerr << "Folder already exists!\n";
+		//else
+		//	std::cerr << "Folder already exists!\n";
 	}
 	catch (const std::exception& e) {
 		std::cerr << "[ERROR]: during folder creation: " << e.what() << '\n';
@@ -94,27 +78,26 @@ bool CreateUserInfoFile(const std::string username, const std::string uniqueIden
 	std::filesystem::path path = FindWhereEXEFileIs();
 	try {
 		std::string fileName = "Users\\" + username + ".info.txt";
-
 		std::filesystem::path pathWithoutExeSuffix = RemoveFilenameAndSeparator(path, fileName);
 
 		bool fileExists = CheckIfFileAlreadyExists(pathWithoutExeSuffix);
 
+		//std::cout << "pathWithoutExeSuffix: " << pathWithoutExeSuffix << std::endl;
+		//std::cout << "fileExists: " << fileExists << std::endl;
+
 		if (!fileExists) {
-			std::ofstream file(pathWithoutExeSuffix, std::ios::app);
+			std::ofstream file(pathWithoutExeSuffix, std::ios::out | std::ios::binary | std::ios::trunc);
 
 			if (!file.is_open())
 				return false;
 
+			file << username << '\n';
+			file << uniqueIdentifier << '\n';
+			file.write(privateKey.data(), privateKey.size());
 
-			// Write into the file
-			std::string output;
-			output += username + '\n';
-			output += uniqueIdentifier + '\n';
-			output += privateKey + '\n';
-			file << output;
 			file.close();
 
-			std::cout << "Succeed to store the user info locally!\n";
+			//std::cout << "Succeed to store the user info locally!\n";
 			return true;
 		}
 		else {
@@ -123,18 +106,37 @@ bool CreateUserInfoFile(const std::string username, const std::string uniqueIden
 		}
 	}
 	catch (const std::exception& e) {
-		std::cout << "Failed to access the folder!\n " <<  e.what();
+		std::cout << "Failed to access the folder!\n " << e.what();
 		return false;
 	}
-	
 }
 
+/*
+	Where the client.exe is stored, we have different folders&files,
+	We want to check the folders or files exist before moving forward.
+*/
+bool checkIfFileOrFolderExistsInExeFolder(std::string folderName) {
+	std::filesystem::path path = FindWhereEXEFileIs();
+	std::string fileName = folderName;
+	std::filesystem::path pathWithoutExeSuffix = RemoveFilenameAndSeparator(path, fileName);
+
+	return std::filesystem::exists(pathWithoutExeSuffix);
+}
+
+
 //int main() {
-//	RSAPrivateWrapper rsa;
-//	std::string privateKey = rsa.getPrivateKey();
+//	/*RSAPrivateWrapper rsa;
+//	std::string privateKey = rsa.getPrivateKey();*/
 //
-//	OpenFolderInsideExeFile("Users");
-//	CreateUserInfoFile("Yarden", "55HJPP234!@#$%!@ASASVASV", privateKey);
+//	//OpenFolderInsideExeFile("Users");
+//	//CreateUserInfoFile("Yarden", "55HJPP234!@#$%!@ASASVASV", privateKey);
+//
+//
+//	std::cout << "Users:" << checkIfFileOrFolderExistsInExeFolder("Users") << std::endl;
+//
+//
+//	std::vector<uint8_t> clientId = getUserId("Yarden");
+//	std::cout << clientId.data() << std::endl;
 //
 //	std::system("pause");
 //	return 0;

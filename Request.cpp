@@ -13,17 +13,6 @@ void ResponseHeader::BuildResponseHeader(uint8_t *response) {
 	this->version = response[0];
 	this->code = (response[2] << 8) + response[1];
 	this->payload_size = (response[6] << (8 * 3)) + (response[5] << (8 * 2)) + (response[4] << 8) + response[3];
-	std::cout << "version: " << unsigned(this->version) << std::endl; // Without cast to "unsigned", the value of unit8_t won't be printed
-	std::cout << "code: " << this->code << std::endl;
-	std::cout << "payload_size: " << this->payload_size << std::endl;
-
-	// Other version:
-	//this->version = response[0];
-	//this->code = response[2] * 256 + response[1];
-	//this->payload_size = response[6] * pow(256, 3) + response[5] * pow(256, 2) + response[4] * 256 + response[3];
-
-	
-
 }
 
 

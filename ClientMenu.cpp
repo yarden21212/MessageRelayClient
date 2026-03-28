@@ -19,6 +19,7 @@ void ClientMenu::DisplayOptions(){
 		"150) Send a text message\n"
 		"151) Send a request for symmetric key\n"
 		"152) Send your symmetric key\n"
+		"153) Send a file\n"
 		"0) Exit client\n"
 		"?"
 		<<std::endl;
@@ -63,6 +64,8 @@ ClientMenu::Menu ClientMenu::ConvertToMenuOption(std::string_view userInput) {
 		return ClientMenu::Menu::REQUEST_SYMMETRIC_KEY;
 	case 152:
 		return ClientMenu::Menu::SEND_SYMMETRIC_KEY;
+	case 153:
+		return ClientMenu::Menu::SEND_FILE;
 	case 0:
 		return ClientMenu::Menu::EXIT;
 
@@ -85,33 +88,35 @@ std::string ClientMenu::PickMenuOption(Menu option) {
 	switch (option) {
 
 	case Menu::REGISTER:
-		std::cout << "Register was chosen!" << std::endl;
+		//std::cout << "Register was chosen!" << std::endl;
 		return "register";
 
 	case Menu::CLIENTS_LIST:
-		std::cout << "Client list was chosen!" << std::endl;
+		//std::cout << "Client list was chosen!" << std::endl;
 		return "client list";
 
 	case Menu::GET_PUBLIC_KEY:
-		std::cout << "Public key was chosen!" << std::endl;
+		//std::cout << "Public key was chosen!" << std::endl;
 		return "public key";
 
 	case Menu::PULL_MESSAGES:
-		std::cout << "Pull messages was chosen!" << std::endl;
+		//std::cout << "Pull messages was chosen!" << std::endl;
 		return "pull messages";
 
 	case Menu::SEND_MESSAGE:
-		std::cout << "Send a message was chosen!" << std::endl;
+		//std::cout << "Send a message was chosen!" << std::endl;
 		return "send message";
 
 	case Menu::REQUEST_SYMMETRIC_KEY:
-		std::cout << "Request symmetric key was chosen!" << std::endl;
+		//std::cout << "Request symmetric key was chosen!" << std::endl;
 		return "request symmetric key";
 
 	case Menu::SEND_SYMMETRIC_KEY:
-		std::cout << "Send symmetric key was chosen!" << std::endl;
+		//std::cout << "Send symmetric key was chosen!" << std::endl;
 		return "send symmetric key";
-
+	case Menu::SEND_FILE:
+		//std::cout << "Send file was chosen!" << std::endl;
+		return "send a file";
 	case Menu::EXIT:
 		std::cout << "Exit was chosen!" << std::endl;
 		return "exit";
@@ -128,7 +133,7 @@ std::string ClientMenu::OptionSelected(ClientMenu& menu) {
 	option = general::reduce(option); // Deletes extra name-spaces
 	ClientMenu::Menu optionLegalityCheck = ConvertToMenuOption(option);
 	std::string legalOption = menu.PickMenuOption(optionLegalityCheck);
-	std::cout << "Option chosen: " << legalOption << std::endl;
+	//std::cout << "Option chosen: " << legalOption << std::endl;
 
 	return legalOption;
 }

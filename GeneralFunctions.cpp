@@ -1,8 +1,5 @@
 #include "GeneralFunctions.h"
-#include "FileFunctionality.h"
-
-#include "CustomExceptions.h"
-
+#include "ResponseHandler.h"
 
 #include <filesystem>
 
@@ -91,6 +88,100 @@ namespace general {
 
         return true;
     }
+    /*
+        Takes a bytes representation and converts it into hex representation.
+        Will be used when I want to show the client a representation which is human-readable.
+    */
+    std::string ConvertBytesToHex(const std::vector<uint8_t>& payload) {
+
+        std::ostringstream x;
+        x << std::hex << std::setfill('0');
+        auto const& w{ std::setw(2) };
+        for (auto b : payload)
+            x << w << int(b);
+        std::string uniqueIdentifierHex{ x.str() };
+
+        return uniqueIdentifierHex;
+    }
+
+    /*
+        Convert hex string to byte array (using sscanf)
+        More explanation here: https://www.codestudy.net/blog/converting-a-hex-string-to-a-byte-array/
+    */
+    std::vector<uint8_t> ConvertHexToBytes(const std::string& hex) {
+        std::vector<uint8_t> bytes;
+        bytes.reserve((hex.size() + 1) / 2); // Reserve space for efficiency
+
+        for (size_t i = 0; i < hex.size(); i += 2) {
+            uint8_t byte;
+            // Extract 1 or 2 characters (handle odd lengths)
+            std::string chunk = hex.substr(i, 2); // substr(i, 2) returns 1 char if i is last
+
+            // Use sscanf to parse hex chunk into byte
+            if (sscanf_s(chunk.c_str(), "%hhx", &byte) != 1) {
+                throw std::invalid_argument("Invalid hex string: failed to parse chunk '" + chunk + "'");
+            }
+
+            bytes.push_back(byte);
+        }
+
+        return bytes;
+    }
+
+    /*
+       Access the "Users" folder inside the folder where "client.exe" is stored.
+       We first check if "Users" even exists -> then access the specific username.info we were given as parameter
+       -> and then takes its second-row\second-line which represents the client-id
+   */
+    std::string getUserId(std::string& username) {
+        bool usersFolderExists = checkIfFileOrFolderExistsInExeFolder("Users");
+        if (!usersFolderExists) {
+            std::cout << "User is not registered!" << std::endl;
+            return "";
+        }
+        else {
+            std::filesystem::path path = RemoveFilenameAndSeparator(FindWhereEXEFileIs(), "Users");
+            path += "\\" + username + ".info.txt";
+
+            std::ifstream myFile(path);
+            if (myFile.is_open()) {
+                std::string line;
+                int lineNumber = 1;
+                while (std::getline(myFile, line))
+                {
+                    if (lineNumber == 2) {
+
+                        //std::cout << "Client ID: " << line << std::endl;
+                        return line;
+                    }
+
+                    lineNumber++;
+                }
+
+                std::cout << "Didn't find the line, something is wrong with the file it self." << std::endl;
+                return "";
+            }
+            else {
+                std::cout << "Unable to open file";
+                return "";
+            }
+        }
+    }
+
+    std::vector<uint8_t> TargetNameExists(ResponseHandler& serverResponse) {
+        std::string targetName;
+        std::cout << "Type target client name: ";
+        std::getline(std::cin, targetName);
+
+        std::vector<uint8_t> targetIdBytes = serverResponse.GetClientIdByName(targetName);
+
+        if (targetIdBytes.empty()) {
+            std::cout << "Client name not found in the members list." << std::endl;
+            return {};
+        }
 
 
+
+        return targetIdBytes;
+    }
 }

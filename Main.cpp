@@ -1,15 +1,11 @@
 #include <sstream>
 #include <string>
-
 #include <fstream>
 
 #include "FileFunctionality.h"
 #include "ClientMenu.h"
 #include "ClientConnection.h"
 #include "NetworkBelonging.h"
-
-
-
 
 
 // How to handle files in c++: https://www.geeksforgeeks.org/cpp/file-handling-c-classes/
@@ -28,7 +24,6 @@ int main(int argc, char* argv[]) {
 		getline(fileReadStream, networkInfoTemp);
 
 		char* networkInfoPtr = networkInfoTemp.data();
-		//std::cout << "File's content: " << networkInfoPtr << std::endl;
 
 
 		std::string ip;
@@ -47,19 +42,6 @@ int main(int argc, char* argv[]) {
 		TCPConnector(ip, port);
 
 	}
-	//else {
-	//	//std::fstream contactFile(path, std::ios::out | std::ios::app);
-
-	//	//if (!contactFile.is_open()) {
-	//	//	std::cout << "Contact has failed to be created, maybe contact already exists? " << path << std::endl;
-	//	//	return;
-	//	//}
-	//	std::cout << "File doesn't exist!" << std::endl;
-	//	std::cin.get();
-	//}
-
-	////TCPConnector(argc, argv);
-	//TCPConnector(networkInfo);
 	
 	std::system("pause");
 	return 0;

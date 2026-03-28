@@ -51,9 +51,6 @@
     <ClCompile Include="..\..\..\cryptopp_wrapper\cryptopp_wrapper\cryptopp_wrapper\RSAWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GenerateKeys.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CustomExceptions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
